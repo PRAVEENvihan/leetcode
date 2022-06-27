@@ -2,7 +2,10 @@ class Solution {
     public int pivotIndex(int[] nums) {
         int sum1=0;
         int sum2=0;
-    
+    if(nums.length==1)
+{
+return 0;
+}
         
         
         for(int i =0 ; i<nums.length;i++){
