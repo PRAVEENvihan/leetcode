@@ -35,26 +35,26 @@ class Solution {
         if(nums.length == 1){
             return;
         }
-        int head = 0; // i
-        int mid  = 0; // j
-        int tail = nums.length - 1; // k
-        while( mid <= tail){
+        int i = 0;  
+        int j  = 0; 
+        int k = nums.length - 1;  
+        while( j <= k){
             
-            if(nums[mid]>1){
-                int temp = nums[mid];
-                nums[mid] = nums[tail];
-                nums[tail] = temp;
-                tail --;
+            if(nums[j]>1){
+                int temp = nums[j];
+                nums[j] = nums[k];
+                nums[k] = temp;
+                k --;
             }
-            else if(nums[mid]<1){                
-                int temp = nums[head];
-                nums[head] = nums[mid];
-                nums[mid] = temp;
-                head ++;
-                mid ++;
+            else if(nums[j]<1){                
+                int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+                i ++;
+                j ++;
             }
             else{
-                mid ++;
+                j ++;
             }
         }
     }
