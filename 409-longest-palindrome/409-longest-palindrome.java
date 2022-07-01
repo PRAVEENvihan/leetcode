@@ -1,13 +1,5 @@
 class Solution {
-    public int longestPalindrome(String s) {
-	
-	    // PSEUDO_CODE 
-       
-        // pairs ->  (count/2)
-        // result = pairs*2
-        // if(count%2==1 and result%2==0) 
-        //   result++;
-         
+    public int longestPalindrome(String s) {     
         int[] count = new int[128];
         
         int result = 0 ; 
