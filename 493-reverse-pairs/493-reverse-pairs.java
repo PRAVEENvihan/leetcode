@@ -1,102 +1,62 @@
-// class Solution {
-// 	public int reversePairs(int[] nums) {
-// 		return divide(nums);
-// 	}
-// 	public int divide(int [] array){
-// 		if(array.length <2)
-// 			return 0;
-
-// 		int mid = array.length/2;
-// 		int [] left = new int[mid];
-// 		for(int i = 0;i<mid;i++){
-// 			left[i] = array[i];
-// 		}
-
-// 		int [] right = new int [array.length - mid];
-
-// 		for (int i =mid;i<array.length;i++)
-// 			right[i - mid] = array[i];
-
-// 		int count = divide(left);
-// 		count += divide(right);
-// 		count += merge(left,right,array);
-// 		return count;
-// 	}
-// 	public int merge(int[] left, int[] right, int [] result){
-// 		int i = 0, j = 0, k = 0, count = 0;
-// 		while(i < left.length){
-// 			while(j < right.length && left[i] > 2*(long)(right[j]))
-// 				j++;
-// 			count += j;
-// 			i++;
-// 		}
-// 		i = 0;
-// 		j = 0;
-// 		while (i< left.length && j< right.length){
-// 			if (left[i] <= right[j])
-// 				result[k++] = left[i++];
-// 			else{
-// 				result[k++] = right[j++];
-// 			}
-// 		}
-// 		while (i< left.length)
-// 			result[k++] = left[i++];
-// 		while (j< right.length)
-// 			result[k++] = right[j++];
-// 		return count;
-// 	}
-// 	}
 class Solution {
-    public class BIT {
-        int[] arr;
-        public BIT(int size) {
-            arr = new int[size];
-        }
-        public void update(int idx, int delta) {
-            idx++;
-            while (idx < arr.length) {
-                arr[idx] += delta;
-                idx += (idx & -idx);
-            }
-        }
-        public int getPrefixSum(int idx) {
-            idx++;
-            int sum = 0;
-            while(idx>0) {
-                sum += arr[idx];
-                idx -= (idx & -idx);
-            }
-            return sum;
-        }
+    
+    
+    int mergeSort(int[] arr , int l , int r){
+    if(l>=r) return 0;
+    int mid = l+(r-l)/2;
+    int count = mergeSort(arr,l,mid);
+    count = count + mergeSort(arr , mid+1 , r);
+    count = count + merge(arr , l , mid , r);
+    return count;
+}
+
+
+int merge(int[] arr , int l , int mid , int r){
+    int count =0;
+    int n1= mid-l+1;
+ 
+    int[] L=new int[n1];
+    
+       int n2=r-mid;
+    int[] R=new int[n2];
+    
+    
+     for (int i = 0; i < n1; i++)
+            L[i] = arr[l+i];
+        for (int j = 0; j < n2; j++)
+            R[j] = arr[mid+1+j];
+    
+    
+    int j=0;
+    for(int i=0;i<n1;i++){
+        while(j<n2 && L[i]>(2*(long)R[j]))
+            j++;
+        count+=j;
     }
-    public int reversePairs(int[] nums) {
-        if (nums == null || nums.length <= 1) return 0;
-        int n = nums.length;
-        int[] copy = nums.clone();
-        Arrays.sort(copy);
+    
+    int i = 0, k = (int)l; j = 0;
+        
+        while (i < n1 && j < n2) {
+            if (L[i] <= R[j])
+                arr[k++] = L[i++];
 
-        int[] nums2 = Arrays.stream(copy).distinct().toArray();
-        BIT myBit = new BIT(nums.length+1);
-        int totalCnt = 0;
-        for(int i = nums.length-1;i>=0;i--) {
-            int index1 = Arrays.binarySearch(nums2, (int) (nums[i]*1.0/2));
-            if (index1>=0) {
-                // need <= for the negative number
-                if (nums[i] <= nums2[index1] *2) {
-                    index1--;
-                }
-            }
-            // can not find, Arrays.binarySearch returns -(insertion point) – 1). 
-            if (index1<=-1) {
-                index1 = Math.abs(index1)-2;
-            }
-
-            int index2 = Arrays.binarySearch(nums2, nums[i]);
-
-            totalCnt+= myBit.getPrefixSum(index1);
-            myBit.update(index2, 1);
-
+            else
+                arr[k++] = R[j++];
         }
-        return totalCnt;
+        
+        while (i < n1)
+            arr[k++] = L[i++];
+
+        while (j < n2)
+            arr[k++] = R[j++];
+        
+        return count;
+}
+    
+    
+    
+    
+    public int reversePairs(int[] arr) {
+        return mergeSort(arr,0,arr.length-1);
     }
 }
