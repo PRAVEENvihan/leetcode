@@ -4,12 +4,10 @@ class Solution {
 return 1;
 else{
 double res = myPow(x, n/2);
-if(n % 2 < 0) //case of decimal fraction
-return res * res / x;
-else if(n % 2 > 0) //case for odd value
-return res * res * x;
+if(n % 2 < 0) return res * res / x;
+else if(n % 2 > 0) return res * res * x;
 else
-return res * res; //case for even value
+return res * res;
 }
     }
 }
