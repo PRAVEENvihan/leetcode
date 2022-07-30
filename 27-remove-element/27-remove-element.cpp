@@ -10,15 +10,20 @@ public:
         //         count++;
         //     }
         // }
-        int i=0;
-        
+        int j=0,i=0;
         while(i<nums.size()){
-            if(nums[i]==val){
-                nums.erase(nums.begin()+i);
-                i=-1;
+            if(nums[i]!=val){
+                nums[j++]=nums[i];
             }
             i++;
         }
-        return nums.size();
+        // while(i<nums.size()){
+        //     if(nums[i]==val){
+        //         nums.erase(nums.begin()+i);
+        //         i=-1;
+        //     }
+        //     i++;
+        // }
+        return j;
     }
 };
