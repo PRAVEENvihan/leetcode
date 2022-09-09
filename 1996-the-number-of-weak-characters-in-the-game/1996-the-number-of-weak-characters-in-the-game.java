@@ -3,7 +3,7 @@ class Solution {
         Arrays.sort(arr , (a,b)->a[0]==b[0]? b[1] -a[1]:a[0]-b[0]);
         int res= 0;
         
-        int min=0;
+        int min=Integer.MIN_VALUE;
         for(int i=arr.length-1;i>=0;i--){
             int[] newArr=arr[i];
             int attack=newArr[0];
